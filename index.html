@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>معرض أعمالي في التمثيل</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #1a1a2e;
@@ -25,6 +26,7 @@
             background-color: var(--light);
             color: var(--dark);
             line-height: 1.6;
+            padding-top: 72px; /* Added to prevent content from hiding under fixed header */
         }
         
         .container {
@@ -41,6 +43,7 @@
             position: fixed;
             width: 100%;
             top: 0;
+            left: 0; /* Ensure header spans full width */
             z-index: 1000;
             box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
@@ -49,6 +52,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative; /* Added for positioning mobile menu */
         }
         
         .logo {
@@ -88,6 +92,18 @@
         nav ul li a:hover {
             background-color: var(--accent);
         }
+
+        /* Hamburger Menu Icon */
+        .menu-toggle {
+            display: none; /* Hidden by default, shown on small screens */
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 1001; /* Ensure it's above other content */
+        }
         
         /* Hero Section */
         .hero {
@@ -101,7 +117,7 @@
             align-items: center;
             text-align: center;
             color: white;
-            margin-top: 60px;
+            margin-top: 0; /* Removed as body padding-top handles it */
         }
         
         .hero-content {
@@ -168,41 +184,6 @@
             width: 100%;
             border-radius: 10px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-        
-        /* Story Section */
-        .story-section {
-            background-color: white;
-            padding: 80px 0;
-        }
-        
-        .story-content {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-        
-        .story-content h2 {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 30px;
-        }
-        
-        .story-content p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 20px;
-            text-align: right;
-        }
-        
-        .story-image {
-            margin: 30px auto;
-            max-width: 500px;
-        }
-        
-        .story-image img {
-            width: 100%;
-            border-radius: 10px;
         }
         
         /* Sections */
@@ -326,7 +307,7 @@
         /* Video Section */
         .video-container {
             position: relative;
-            padding-bottom: 56.25%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
             height: 0;
             overflow: hidden;
             margin-bottom: 30px;
@@ -640,20 +621,59 @@
         /* Responsive */
         @media (max-width: 768px) {
             .header-container {
+                flex-direction: row; /* Keep logo and toggle on one row */
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            nav {
+                position: fixed; /* Changed to fixed to be relative to viewport */
+                top: 72px; /* Set explicit top based on header height */
+                left: 0;
+                width: 100vw; /* 100% of viewport width */
+                background: linear-gradient(to right, var(--primary), var(--secondary));
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                display: none; /* Hidden by default */
                 flex-direction: column;
-                text-align: center;
+                align-items: center;
+                padding: 10px 0;
+                opacity: 0;
+                transform: translateY(-10px);
+                transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+            }
+
+            nav.active {
+                display: flex; /* Show when active */
+                opacity: 1;
+                transform: translateY(0);
             }
             
             nav ul {
-                margin-top: 15px;
-                justify-content: center;
-                flex-wrap: wrap;
+                flex-direction: column; /* Stack items vertically */
+                align-items: center; /* Center items when stacked */
+                gap: 10px; /* Add some space between stacked items */
+                width: 100%; /* Ensure ul takes full width of its parent (nav) */
             }
             
             nav ul li {
-                margin: 5px 10px;
+                margin: 0; /* Remove horizontal margin */
+                width: 100%; /* Make list items take full width of ul */
+                text-align: center; /* Center text within list items */
+            }
+
+            nav ul li a {
+                display: block; /* Make links block-level for better click area */
+                padding: 10px 0; /* Adjust padding for stacked links */
+            }
+
+            .menu-toggle {
+                display: block; /* Show hamburger icon */
             }
             
+            .hero {
+                margin-top: 0; /* Removed as body padding-top handles it */
+            }
+
             .hero h1 {
                 font-size: 2rem;
             }
@@ -694,14 +714,17 @@
     <header>
         <div class="container header-container">
             <div class="logo">
-                <img src="لوجو الفريق .jpg" alt="Logo">
+                <img src="https://placehold.co/40x40/1a1a2e/f1f1f1?text=Logo" alt="Logo"> <!-- Placeholder for logo -->
                 <div class="logo-text">كرنفال زكريا</div>
             </div>
-            <nav>
+            <button class="menu-toggle" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="main-nav">
                 <ul>
                     <li><a href="#home">الرئيسية</a></li>
                     <li><a href="#about">عن الفريق</a></li>
-                    <li><a href="#story">قصة زكريا</a></li>
+                    <li><a href="index2.html">قصة زكريا</a></li>
                     <li><a href="#portfolio">معرض الأعمال</a></li>
                     <li><a href="#videos">الفيديوهات</a></li>
                     <li><a href="#team">فريق العمل</a></li>
@@ -731,27 +754,7 @@
                 <p>نؤمن بأن الفن رسالة سامية، ونسعى من خلال أعمالنا إلى إيصال القيم الإنسانية والدينية بأسلوب معاصر وجذاب.</p>
             </div>
             <div class="team-image">
-                <img src="https://images.unsplash.com/photo-1547153760-18fc86324498?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="صورة الفريق">
-            </div>
-        </div>
-    </section>
-
-    <!-- Story of Prophet Zakariya Section -->
-    <section class="story-section" id="story">
-        <div class="container">
-            <div class="story-content">
-                <h2>قصة نبي الله زكريا عليه السلام</h2>
-                <p>زكريا عليه السلام هو نبي من أنبياء الله الصالحين، ورد ذكره في القرآن الكريم في عدة مواضع. كان يعمل نجاراً ويقوم برعاية بيت المقدس وخدمته.</p>
-                <p>عاش زكريا في وقت كان بنو إسرائيل في أمس الحاجة إلى الهداية، فدعاهم إلى عبادة الله الواحد وترك ما كانوا عليه من ضلال.</p>
-                <p>من أشهر قصصه طلبه الولد من الله وهو كبير السن وامرأته عاقر، فاستجاب الله لدعائه وبشره بيحيى عليه السلام الذي كان نبياً صالحاً من الصغر.</p>
-                <p>تعتبر قصة زكريا نموذجاً للصبر والثقة بالله والتضرع إليه، كما أنها تظهر قدرة الله على خرق السنن الكونية عندما يشاء.</p>
-                
-                <div class="story-image">
-                    <img src="https://images.unsplash.com/photo-1585011650347-c59c5334a2fc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="تصوير لقصة زكريا">
-                </div>
-                
-                <p>في أعمالنا الفنية، نحاول تقديم قصة زكريا عليه السلام بأسلوب درامي مؤثر، مع الحفاظ على الأمانة في نقل القصة كما وردت في القرآن الكريم والسنة النبوية.</p>
-                <p>نركز في أعمالنا على الدروس المستفادة من القصة، مثل أهمية الدعاء والصبر والثقة بالله تعالى، وكيف أن الله قادر على كل شيء.</p>
+                <img src="https://placehold.co/600x400/1a1a2e/f1f1f1?text=Team+Image" alt="صورة الفريق"> <!-- Placeholder for team image -->
             </div>
         </div>
     </section>
@@ -774,7 +777,7 @@
                 <!-- Item 1 -->
                 <div class="portfolio-item" data-category="acting">
                     <div class="portfolio-img">
-                        <img src="زكريا.png" alt="عمل تمثيلي 1">
+                        <img src="https://placehold.co/600x400/1a1a2e/f1f1f1?text=Acting+1" alt="عمل تمثيلي 1"> <!-- Placeholder for acting image -->
                     </div>
                     <div class="portfolio-overlay">
                         <div class="portfolio-info">
@@ -800,7 +803,7 @@
                 <!-- Item 3 -->
                 <div class="portfolio-item" data-category="acting">
                     <div class="portfolio-img">
-                        <img src="زكريا.png" alt="عمل تمثيلي 2">
+                        <img src="https://placehold.co/600x400/1a1a2e/f1f1f1?text=Acting+2" alt="عمل تمثيلي 2"> <!-- Placeholder for acting image -->
                     </div>
                     <div class="portfolio-overlay">
                         <div class="portfolio-info">
@@ -860,15 +863,15 @@
             </div>
             
             <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/VIDEO_ID_1" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/VIDEO_ID_1" allowfullscreen></iframe> <!-- Replace VIDEO_ID_1 with actual YouTube video ID -->
             </div>
             
             <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
                 <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/VIDEO_ID_2" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/VIDEO_ID_2" allowfullscreen></iframe> <!-- Replace VIDEO_ID_2 with actual YouTube video ID -->
                 </div>
                 <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/VIDEO_ID_3" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/VIDEO_ID_3" allowfullscreen></iframe> <!-- Replace VIDEO_ID_3 with actual YouTube video ID -->
                 </div>
             </div>
         </div>
@@ -1011,49 +1014,45 @@
             <div class="section-title">
                 <h2>تواصل معي</h2>
             </div>
-            
             <div class="contact-container">
                 <div class="contact-info">
-                    <h3>معلومات التواصل</h3>
+                    <h3>معلومات الاتصال</h3>
                     <div class="info-item">
                         <i class="fas fa-map-marker-alt"></i>
-                        <span>القاهرة، مصر</span>
-                    </div>
-                    <div class="info-item">
-                        <i class="fas fa-envelope"></i>
-                        <span>email@example.com</span>
+                        <p>القاهرة، مصر</p>
                     </div>
                     <div class="info-item">
                         <i class="fas fa-phone"></i>
-                        <span>+20 123 456 7890</span>
+                        <p>+20 123 456 7890</p>
                     </div>
-                    <div class="social-links" style="margin-top: 30px;">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <p>info@newera.com</p>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <p>السبت - الخميس: 9:00 صباحاً - 5:00 مساءً</p>
                     </div>
                 </div>
-                
                 <div class="contact-form">
-                    <form>
+                    <form action="#" method="POST">
                         <div class="form-group">
-                            <label for="name">الاسم</label>
-                            <input type="text" id="name" class="form-control" required>
+                            <label for="name">الاسم الكامل</label>
+                            <input type="text" id="name" name="name" class="form-control" placeholder="أدخل اسمك" required>
                         </div>
                         <div class="form-group">
                             <label for="email">البريد الإلكتروني</label>
-                            <input type="email" id="email" class="form-control" required>
+                            <input type="email" id="email" name="email" class="form-control" placeholder="أدخل بريدك الإلكتروني" required>
                         </div>
                         <div class="form-group">
                             <label for="subject">الموضوع</label>
-                            <input type="text" id="subject" class="form-control" required>
+                            <input type="text" id="subject" name="subject" class="form-control" placeholder="موضوع الرسالة" required>
                         </div>
                         <div class="form-group">
-                            <label for="message">الرسالة</label>
-                            <textarea id="message" class="form-control" required></textarea>
+                            <label for="message">رسالتك</label>
+                            <textarea id="message" name="message" class="form-control" placeholder="اكتب رسالتك هنا..." required></textarea>
                         </div>
-                        <button type="submit" class="submit-btn">إرسال</button>
+                        <button type="submit" class="submit-btn">إرسال الرسالة</button>
                     </form>
                 </div>
             </div>
@@ -1062,110 +1061,93 @@
 
     <!-- Footer -->
     <footer>
-        <div class="container">
-            <div class="footer-container">
-                <div class="footer-col">
-                    <h3>عن الموقع</h3>
-                    <p>هذا الموقع يعرض أعمالي في مجال التمثيل والأوبريتات والمسرحيات، ويوثق رحلتي الفنية.</p>
-                </div>
-                <div class="footer-col">
-                    <h3>روابط سريعة</h3>
-                    <ul>
-                        <li><a href="#home">الرئيسية</a></li>
-                        <li><a href="#about">عن الفريق</a></li>
-                        <li><a href="#story">قصة زكريا</a></li>
-                        <li><a href="#portfolio">معرض الأعمال</a></li>
-                        <li><a href="#videos">الفيديوهات</a></li>
-                        <li><a href="#team">فريق العمل</a></li>
-                        <li><a href="#process">خطوات العمل</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h3>وسائل التواصل</h3>
-                    <div class="footer-social">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                    </div>
+        <div class="container footer-container">
+            <div class="footer-col">
+                <h3>عن الفريق</h3>
+                <p>فريق "كرنفال زكريا" متخصص في تقديم الأعمال المسرحية الدينية والتاريخية، بهدف إحياء التراث الديني بشكل فني راقٍ.</p>
+            </div>
+            <div class="footer-col">
+                <h3>روابط سريعة</h3>
+                <ul>
+                    <li><a href="#home">الرئيسية</a></li>
+                    <li><a href="#about">عن الفريق</a></li>
+                    <li><a href="index2.html">قصة زكريا</a></li>
+                    <li><a href="#portfolio">معرض الأعمال</a></li>
+                    <li><a href="#contact">تواصل معنا</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>معلومات الاتصال</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> القاهرة، مصر</li>
+                    <li><i class="fas fa-phone"></i> +20 123 456 7890</li>
+                    <li><i class="fas fa-envelope"></i> info@newera.com</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>تابعنا</h3>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
-            <div class="copyright">
-                <p>&copy; 2023 جميع الحقوق محفوظة | معرض أعمالي في التمثيل</p>
-            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2024 كرنفال زكريا. جميع الحقوق محفوظة.</p>
         </div>
     </footer>
 
-    <!-- JavaScript -->
     <script>
-        // Portfolio Filter
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        const portfolioItems = document.querySelectorAll('.portfolio-item');
-        
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                // Remove active class from all buttons
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                // Add active class to clicked button
-                button.classList.add('active');
-                
-                const filterValue = button.getAttribute('data-filter');
-                
-                portfolioItems.forEach(item => {
-                    if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
-                        item.style.display = 'block';
-                    } else {
-                        item.style.display = 'none';
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav ul li a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                // Only prevent default and scroll if it's an internal link on the same page
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    // Close the mobile menu if it's open
+                    const mainNav = document.getElementById('main-nav');
+                    if (mainNav.classList.contains('active')) {
+                        mainNav.classList.remove('active');
                     }
-                });
-            });
-        });
-        
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
                         behavior: 'smooth'
                     });
                 }
             });
         });
-        
-        // Sticky header on scroll
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
-            } else {
-                header.style.boxShadow = 'none';
-            }
-        });
 
-        // Animation for new sections
+        // Portfolio filtering logic
         document.addEventListener('DOMContentLoaded', function() {
-            const sections = document.querySelectorAll('.about-team, .story-section');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = 1;
-                        entry.target.style.transform = 'translateY(0)';
-                    }
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove 'active' class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add 'active' class to the clicked button
+                    this.classList.add('active');
+
+                    const filterValue = this.getAttribute('data-filter');
+
+                    portfolioItems.forEach(item => {
+                        if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                            item.style.display = 'block'; // Show the item
+                        } else {
+                            item.style.display = 'none'; // Hide the item
+                        }
+                    });
                 });
-            }, { threshold: 0.1 });
-            
-            sections.forEach(section => {
-                section.style.opacity = 0;
-                section.style.transform = 'translateY(50px)';
-                section.style.transition = 'all 0.8s ease-out';
-                observer.observe(section);
+            });
+
+            // Mobile menu toggle logic
+            const menuToggle = document.getElementById('menu-toggle');
+            const mainNav = document.getElementById('main-nav');
+
+            menuToggle.addEventListener('click', function() {
+                mainNav.classList.toggle('active');
             });
         });
     </script>
